@@ -37,37 +37,51 @@ body {
   font-size: 0.95rem;
 }
 
-/* Masonry Grid (Pinterest rozvržení) */
+/* Záložky */
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.tab-btn.active {
+  background: #111;
+  color: white;
+}
+
+/* Grid */
 .grid {
-  column-count: 5;
+  column-count: 4;
   column-gap: 16px;
   padding: 20px;
 }
 
-@media (max-width: 1200px) { .grid { column-count: 4; } }
-@media (max-width: 900px)  { .grid { column-count: 3; } }
-@media (max-width: 600px)  { .grid { column-count: 2; } }
+@media (max-width: 900px) { .grid { column-count: 2; } }
 
-/* Karty (Piny) */
+/* Karty */
 .pin {
   break-inside: avoid;
   margin-bottom: 16px;
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  background: #eee;
-  cursor: pointer;
+  background: #e0e0e0;
 }
 
 .pin img {
   width: 100%;
   display: block;
   border-radius: 16px;
-  transition: transform 0.2s, filter 0.2s;
-}
-
-.pin:hover img {
-  filter: brightness(0.85);
 }
 
 .save-btn {
@@ -81,10 +95,8 @@ body {
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s;
 }
 
-.pin:hover .save-btn {
-  opacity: 1;
+.save-btn.saved {
+  background: #111;
 }
