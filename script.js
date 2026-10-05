@@ -29,10 +29,29 @@ const pinsData = [
 
 const container = document.getElementById('pin-container');
 const searchInput = document.getElementById('search-input');
-
-// Načtení uložených pinů z localStorage
+const tabAll = document.getElementById('tab-all');
+const tabSaved = document.getElementById('tab-saved');
+// Stav aplikace
 let savedPinIds = JSON.parse(localStorage.getItem('savedPins')) || [];
+let activeTab = 'all'; // 'all' nebo 'saved'
 
+// Hlavní funkce pro filtrování a zobrazení pinů
+function updateDisplay() {
+  const query = searchInput.value.toLowerCase().trim();
+
+  const filteredPins = pinsData.filter(pin => {
+    // 1. Kontrola vyhledávání
+    const matchesSearch = pin.title.toLowerCase().includes(query) || 
+                          pin.category.toLowerCase().includes(query);
+    
+    // 2. Kontrola záložky (Vše vs. Uložené)
+    const matchesTab = (activeTab === 'all') || savedPinIds.includes(pin.id);
+
+    return matchesSearch && matchesTab;
+  });
+
+  renderPins(filteredPins);
+}
 // Funkce pro vykreslení pinů
 function renderPins(pinsToRender) {
   container.innerHTML = '';
@@ -81,17 +100,26 @@ function toggleSavePin(id, button) {
 
   // Uložení stavu do localStorage prohlížeče
   localStorage.setItem('savedPins', JSON.stringify(savedPinIds));
+  updateDisplay(); // Obnovit zobrazení
 }
 
-// Vyhledávání v reálném čase
-searchInput.addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  const filteredPins = pinsData.filter(pin => 
-    pin.title.toLowerCase().includes(query) || 
-    pin.category.toLowerCase().includes(query)
-  );
-  renderPins(filteredPins);
+// Posluchače událostí pro vyhledávání
+searchInput.addEventListener('input', updateDisplay);
+
+// Posluchače událostí pro přepínání záložek
+tabAll.addEventListener('click', () => {
+  activeTab = 'all';
+  tabAll.classList.add('active');
+  tabSaved.classList.remove('active');
+  updateDisplay();
+});
+
+tabSaved.addEventListener('click', () => {
+  activeTab = 'saved';
+  tabSaved.classList.add('active');
+  tabAll.classList.remove('active');
+  updateDisplay();
 });
 
 // Prvotní vykreslení
-renderPins(pinsData);
+updateDisplay();
