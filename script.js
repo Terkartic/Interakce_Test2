@@ -8,10 +8,12 @@ for (let i = 0; i < 20; i++) {
   const pin = document.createElement('div');
   pin.className = 'pin';
 
-  pin.innerHTML = `
-<img src="https://picsum.photos/300/${height}?random=${i}" alt="Pin ${i + 1}">
-<button class="save-btn" onclick="alert('Uloženo!')">Uložit</button>
-  `;
+pinElement.innerHTML = `
+  <img src="https://picsum.photos/id/${pin.id * 10}/300/${pin.height}" alt="${pin.title}">
+  <button class="save-btn ${isSaved ? 'saved' : ''}" data-id="${pin.id}">
+    ${isSaved ? 'Uloženo' : 'Uložit'}
+  </button>
+`;
 
   container.appendChild(pin);
 }
