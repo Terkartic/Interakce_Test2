@@ -9,7 +9,7 @@ for (let i = 0; i < 20; i++) {
   pin.className = 'pin';
 
   pin.innerHTML = `
-<img src="https://dummyimage.com/300x${pin.height}/e0e0e0/000000.png?text=${encodeURIComponent(pin.title)}" alt="${pin.title}">
+<img src="https://picsum.photos/300/${height}?random=${i}" alt="Pin ${i + 1}">
 <button class="save-btn" onclick="alert('Uloženo!')">Uložit</button>
   `;
 
